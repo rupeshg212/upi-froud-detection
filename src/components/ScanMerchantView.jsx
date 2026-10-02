@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { demoMerchants } from "../data/mockData";
 import { evaluateUpiTransaction, parseUpiQrString } from "../utils/fraudDetection";
+import { apiService } from "../utils/apiService";
 
 export default function ScanMerchantView({ onBack, onPayMerchant }) {
   // Currently detected merchant / scan result
@@ -52,42 +53,14 @@ export default function ScanMerchantView({ onBack, onPayMerchant }) {
     }, 400);
   };
 
-  const handleManualSearch = (e) => {
+  const handleManualSearch = async (e) => {
     e.preventDefault();
     if (!manualVpa.trim()) return;
 
     setIsScanning(true);
-    const parsed = parseUpiQrString(manualVpa);
-    const evaluation = evaluateUpiTransaction({
-      recipientVpa: parsed.vpa,
-      amount: 1000
-    });
-
-    const matched = demoMerchants.find(m => m.vpa.toLowerCase() === parsed.vpa.toLowerCase());
-
-    const result = matched || {
-      vpa: parsed.vpa,
-      name: parsed.name || parsed.vpa.split("@")[0],
-      legalName: "Unknown Legal Entity",
-      category: "Unclassified Entity",
-      riskScore: evaluation.riskScore,
-      riskLevel: evaluation.riskLevel,
-      status: evaluation.riskLevel === "HIGH" ? "HIGH RISK MERCHANT" : evaluation.riskLevel === "MEDIUM" ? "MEDIUM RISK MERCHANT" : "VERIFIED SAFE MERCHANT",
-      reportedCount: evaluation.riskLevel === "HIGH" ? 12 : 0,
-      accountAge: evaluation.riskLevel === "HIGH" ? "2 days old" : "1 year old",
-      location: "Unknown Location",
-      bankName: "Standard PSP Node",
-      ifsc: "UNKNOWN001",
-      qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(manualVpa)}`,
-      fraudReasons: evaluation.reasons,
-      safetyWarning: evaluation.riskLevel === "HIGH" ? "This entity exhibits high-risk telemetry indicators." : "Safe to transact with standard caution.",
-      recommendation: evaluation.riskLevel === "HIGH" ? "DO NOT PROCEED with payment." : "Proceed with transaction."
-    };
-
-    setTimeout(() => {
-      setScannedData(result);
-      setIsScanning(false);
-    }, 500);
+    const result = await apiService.scanMerchant(manualVpa);
+    setScannedData(result);
+    setIsScanning(false);
   };
 
   // Start Camera Scanner via html5-qrcode
@@ -156,39 +129,11 @@ export default function ScanMerchantView({ onBack, onPayMerchant }) {
     }
   };
 
-  const handleQrDecoded = (decodedText) => {
+  const handleQrDecoded = async (decodedText) => {
     setIsScanning(true);
-    const parsed = parseUpiQrString(decodedText);
-    const matched = demoMerchants.find(m => m.vpa.toLowerCase() === parsed.vpa.toLowerCase());
-
-    const evaluation = evaluateUpiTransaction({
-      recipientVpa: parsed.vpa,
-      amount: parsed.amount || 1000
-    });
-
-    const result = matched || {
-      vpa: parsed.vpa,
-      name: parsed.name || "Scanned Merchant",
-      legalName: "Entity via QR payload",
-      category: "Retail / Utility",
-      riskScore: evaluation.riskScore,
-      riskLevel: evaluation.riskLevel,
-      status: evaluation.riskLevel === "HIGH" ? "HIGH RISK MERCHANT" : "VERIFIED SAFE MERCHANT",
-      reportedCount: evaluation.riskLevel === "HIGH" ? 14 : 0,
-      accountAge: "1 week old",
-      location: "Scanned Target",
-      bankName: "UPI Linked Bank",
-      ifsc: "UPI0000001",
-      qrCodeUrl: `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(decodedText)}`,
-      fraudReasons: evaluation.reasons,
-      safetyWarning: evaluation.riskLevel === "HIGH" ? "High risk detected in scanned QR endpoint." : "Verified merchant QR.",
-      recommendation: evaluation.riskLevel === "HIGH" ? "DO NOT PROCEED." : "Safe to pay."
-    };
-
-    setTimeout(() => {
-      setScannedData(result);
-      setIsScanning(false);
-    }, 600);
+    const result = await apiService.scanMerchant(decodedText);
+    setScannedData(result);
+    setIsScanning(false);
   };
 
   return (

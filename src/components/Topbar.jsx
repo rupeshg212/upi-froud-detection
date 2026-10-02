@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Bell, Shield, Menu, ChevronDown, CheckCheck, AlertTriangle } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Bell, Shield, Menu, ChevronDown, CheckCheck, AlertTriangle, Server, Zap } from "lucide-react";
+import { apiService } from "../utils/apiService";
 
 export default function Topbar({
   user,
@@ -10,6 +11,23 @@ export default function Topbar({
   onOpenProfile
 }) {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [backendStatus, setBackendStatus] = useState({ connected: false });
+
+  useEffect(() => {
+    let isMounted = true;
+    const check = async () => {
+      const res = await apiService.checkHealth();
+      if (isMounted) {
+        setBackendStatus(res);
+      }
+    };
+    check();
+    const interval = setInterval(check, 10000);
+    return () => {
+      isMounted = false;
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <header className="bg-white border-b border-slate-200 sticky top-0 z-30 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-xs">
@@ -31,11 +49,30 @@ export default function Topbar({
         </div>
       </div>
 
-      <div className="flex items-center space-x-3 sm:space-x-4">
-        {/* Real-Time Protection Badge */}
-        <div className="hidden md:flex items-center space-x-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-full text-xs font-semibold text-emerald-700">
-          <Shield className="w-4 h-4 text-emerald-600 fill-emerald-100" />
-          <span>Smart Shield: ACTIVE</span>
+      <div className="flex items-center space-x-2.5 sm:space-x-4">
+        {/* Real-Time Python ML Backend Status Pill */}
+        <div
+          title={backendStatus.status === "healthy" ? "FastAPI + Scikit-Learn + XGBoost Backend Active" : "Client-side ML Active"}
+          className={`hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold border ${
+            backendStatus.status === "healthy"
+              ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+              : "bg-blue-50 text-blue-800 border-blue-200"
+          }`}
+        >
+          <span className="relative flex h-2 w-2">
+            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+              backendStatus.status === "healthy" ? "bg-emerald-400" : "bg-blue-400"
+            }`}></span>
+            <span className={`relative inline-flex rounded-full h-2 w-2 ${
+              backendStatus.status === "healthy" ? "bg-emerald-500" : "bg-blue-500"
+            }`}></span>
+          </span>
+          <Server className="w-3.5 h-3.5" />
+          <span>
+            {backendStatus.status === "healthy"
+              ? "FastAPI ML Backend: CONNECTED (Port 8001)"
+              : "Smart ML Shield: ACTIVE"}
+          </span>
         </div>
 
         {/* Notifications Dropdown */}

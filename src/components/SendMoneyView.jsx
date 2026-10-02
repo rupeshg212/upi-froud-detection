@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { evaluateUpiTransaction } from "../utils/fraudDetection";
+import { apiService } from "../utils/apiService";
 
 export default function SendMoneyView({ onNewTransaction, prefilledMerchant }) {
   const [recipientVpa, setRecipientVpa] = useState(prefilledMerchant?.vpa || "");
@@ -23,6 +24,7 @@ export default function SendMoneyView({ onNewTransaction, prefilledMerchant }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [showHighRiskWarning, setShowHighRiskWarning] = useState(false);
   const [successTxn, setSuccessTxn] = useState(null);
+  const [isBackendEvaluated, setIsBackendEvaluated] = useState(false);
 
   // Real-time evaluation
   const [evaluation, setEvaluation] = useState({
@@ -39,15 +41,25 @@ export default function SendMoneyView({ onNewTransaction, prefilledMerchant }) {
   }, [prefilledMerchant]);
 
   useEffect(() => {
-    const evalResult = evaluateUpiTransaction({
-      recipientVpa,
-      amount,
-      note,
-      device,
-      location,
-      timeHour: new Date().getHours()
-    });
-    setEvaluation(evalResult);
+    let active = true;
+    const runEval = async () => {
+      const res = await apiService.predict({
+        amount: Number(amount) || 0,
+        recipient_vpa: recipientVpa || "",
+        device,
+        location,
+        note,
+        hour_of_day: new Date().getHours()
+      });
+      if (active) {
+        setEvaluation(res);
+        setIsBackendEvaluated(!!res.fromBackend);
+      }
+    };
+    runEval();
+    return () => {
+      active = false;
+    };
   }, [recipientVpa, amount, note, device, location]);
 
   const quickRecipients = [
