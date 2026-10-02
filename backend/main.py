@@ -7,8 +7,12 @@ from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
-from .database import get_db, init_db
-from .ml_engine import ensemble_engine
+try:
+    from backend.database import get_db, init_db
+    from backend.ml_engine import ensemble_engine
+except ImportError:
+    from database import get_db, init_db
+    from ml_engine import ensemble_engine
 
 # Initialize database on startup
 init_db()
@@ -304,3 +308,8 @@ def retrain_model():
         "metrics": new_metrics,
         "retrained_at": datetime.now().isoformat()
     }
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("backend.main:app", host="127.0.0.1", port=8001, reload=True)

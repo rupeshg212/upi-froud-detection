@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Bell, Shield, Menu, ChevronDown, CheckCheck, AlertTriangle, Server, Zap } from "lucide-react";
+import {
+  Bell,
+  Shield,
+  Menu,
+  ChevronDown,
+  CheckCheck,
+  AlertTriangle,
+  Server,
+  Zap,
+} from "lucide-react";
 import { apiService } from "../utils/apiService";
 
 export default function Topbar({
@@ -8,7 +17,7 @@ export default function Topbar({
   alerts = [],
   onOpenAlerts,
   setMobileOpen,
-  onOpenProfile
+  onOpenProfile,
 }) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [backendStatus, setBackendStatus] = useState({ connected: false });
@@ -41,7 +50,8 @@ export default function Topbar({
 
         <div>
           <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
-            Hello, {user.name.split(" ")[0]} <span className="inline-block animate-bounce">👋</span>
+            Hello, {user.name.split(" ")[0]}{" "}
+            <span className="inline-block animate-bounce">👋</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-500 font-normal">
             Here's what's happening with your account today.
@@ -52,7 +62,11 @@ export default function Topbar({
       <div className="flex items-center space-x-2.5 sm:space-x-4">
         {/* Real-Time Python ML Backend Status Pill */}
         <div
-          title={backendStatus.status === "healthy" ? "FastAPI + Scikit-Learn + XGBoost Backend Active" : "Client-side ML Active"}
+          title={
+            backendStatus.status === "healthy"
+              ? "FastAPI + Scikit-Learn + XGBoost Backend Active"
+              : "Client-side ML Active"
+          }
           className={`hidden md:flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-semibold border ${
             backendStatus.status === "healthy"
               ? "bg-emerald-50 text-emerald-800 border-emerald-200"
@@ -60,12 +74,20 @@ export default function Topbar({
           }`}
         >
           <span className="relative flex h-2 w-2">
-            <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-              backendStatus.status === "healthy" ? "bg-emerald-400" : "bg-blue-400"
-            }`}></span>
-            <span className={`relative inline-flex rounded-full h-2 w-2 ${
-              backendStatus.status === "healthy" ? "bg-emerald-500" : "bg-blue-500"
-            }`}></span>
+            <span
+              className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                backendStatus.status === "healthy"
+                  ? "bg-emerald-400"
+                  : "bg-blue-400"
+              }`}
+            ></span>
+            <span
+              className={`relative inline-flex rounded-full h-2 w-2 ${
+                backendStatus.status === "healthy"
+                  ? "bg-emerald-500"
+                  : "bg-blue-500"
+              }`}
+            ></span>
           </span>
           <Server className="w-3.5 h-3.5" />
           <span>
@@ -93,28 +115,45 @@ export default function Topbar({
           {showNotifications && (
             <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-2xl shadow-xl border border-slate-200 p-4 z-50 animate-in fade-in zoom-in-95 duration-150">
               <div className="flex items-center justify-between pb-3 border-b border-slate-100">
-                <span className="font-bold text-slate-800 text-sm">Security Alerts & Updates</span>
-                <span className="text-xs text-blue-600 font-medium cursor-pointer hover:underline" onClick={onOpenAlerts}>
+                <span className="font-bold text-slate-800 text-sm">
+                  Security Alerts & Updates
+                </span>
+                <span
+                  className="text-xs text-blue-600 font-medium cursor-pointer hover:underline"
+                  onClick={onOpenAlerts}
+                >
                   View all
                 </span>
               </div>
 
               <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto mt-2">
                 {alerts.slice(0, 3).map((alert) => (
-                  <div key={alert.id} className="py-2.5 flex items-start space-x-3 hover:bg-slate-50 p-2 rounded-lg transition-colors cursor-pointer" onClick={onOpenAlerts}>
-                    <div className={`p-1.5 rounded-full mt-0.5 shrink-0 ${
-                      alert.status === "BLOCKED"
-                        ? "bg-rose-100 text-rose-600"
-                        : alert.status === "REVIEW"
-                        ? "bg-amber-100 text-amber-600"
-                        : "bg-blue-100 text-blue-600"
-                    }`}>
+                  <div
+                    key={alert.id}
+                    className="py-2.5 flex items-start space-x-3 hover:bg-slate-50 p-2 rounded-lg transition-colors cursor-pointer"
+                    onClick={onOpenAlerts}
+                  >
+                    <div
+                      className={`p-1.5 rounded-full mt-0.5 shrink-0 ${
+                        alert.status === "BLOCKED"
+                          ? "bg-rose-100 text-rose-600"
+                          : alert.status === "REVIEW"
+                            ? "bg-amber-100 text-amber-600"
+                            : "bg-blue-100 text-blue-600"
+                      }`}
+                    >
                       <AlertTriangle className="w-4 h-4" />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-semibold text-slate-900 truncate">{alert.title}</p>
-                      <p className="text-[11px] text-slate-500 line-clamp-2">{alert.description}</p>
-                      <span className="text-[10px] text-slate-400 mt-1 block">{alert.date}</span>
+                      <p className="text-xs font-semibold text-slate-900 truncate">
+                        {alert.title}
+                      </p>
+                      <p className="text-[11px] text-slate-500 line-clamp-2">
+                        {alert.description}
+                      </p>
+                      <span className="text-[10px] text-slate-400 mt-1 block">
+                        {alert.date}
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -132,8 +171,12 @@ export default function Topbar({
             RG
           </div>
           <div className="hidden sm:block text-left">
-            <span className="text-xs font-bold text-slate-800 block">{user.name}</span>
-            <span className="text-[10px] text-slate-400 font-medium block">{user.upiId}</span>
+            <span className="text-xs font-bold text-slate-800 block">
+              {user.name}
+            </span>
+            <span className="text-[10px] text-slate-400 font-medium block">
+              {user.upiId}
+            </span>
           </div>
           <ChevronDown className="w-4 h-4 text-slate-400 hidden sm:block" />
         </div>
