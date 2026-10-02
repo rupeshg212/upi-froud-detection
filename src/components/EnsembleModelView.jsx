@@ -18,7 +18,7 @@ import {
   ShieldCheck,
   FileText,
   Server,
-  Terminal
+  Terminal,
 } from "lucide-react";
 import { ensembleResearchBenchmarks } from "../data/mockData";
 import { evaluateUpiTransaction } from "../utils/fraudDetection";
@@ -48,7 +48,7 @@ export default function EnsembleModelView() {
     device: simDevice,
     location: simLocation,
     timeHour: simHour,
-    userTotalTxns: simUserTxns
+    userTotalTxns: simUserTxns,
   });
 
   const handleRunKFold = () => {
@@ -72,7 +72,7 @@ export default function EnsembleModelView() {
       "Standardizing continuous features via StandardScaler...",
       "Fitting Level-0 Base Classifiers: MLP, Random Forest, XGBoost, SVM, Logistic Regression...",
       "Generating Out-of-Fold (OOF) cross-validation meta-matrix...",
-      "Fitting Level-1 GradientBoost/CatBoost Meta-Learner via logistic loss..."
+      "Fitting Level-1 GradientBoost/CatBoost Meta-Learner via logistic loss...",
     ]);
 
     try {
@@ -81,11 +81,14 @@ export default function EnsembleModelView() {
         setLiveMetrics(res.metrics);
         setRetrainLogs((prev) => [
           ...prev,
-          `SUCCESS: Stacking Ensemble converged! Accuracy: ${res.metrics.accuracy}%, Recall: ${res.metrics.recall}%, F1: ${res.metrics.f1Score}%, ROC-AUC: ${res.metrics.rocAuc}`
+          `SUCCESS: Stacking Ensemble converged! Accuracy: ${res.metrics.accuracy}%, Recall: ${res.metrics.recall}%, F1: ${res.metrics.f1Score}%, ROC-AUC: ${res.metrics.rocAuc}`,
         ]);
       }
     } catch (e) {
-      setRetrainLogs((prev) => [...prev, "Retrain completed with local calibrated weights."]);
+      setRetrainLogs((prev) => [
+        ...prev,
+        "Retrain completed with local calibrated weights.",
+      ]);
     }
     setIsRetraining(false);
   };
@@ -95,7 +98,7 @@ export default function EnsembleModelView() {
     precision: "Precision (%)",
     recall: "Recall (%)",
     f1Score: "F1-Score (%)",
-    rocAuc: "ROC-AUC"
+    rocAuc: "ROC-AUC",
   };
 
   return (
@@ -123,21 +126,27 @@ export default function EnsembleModelView() {
             </h1>
 
             <p className="text-xs sm:text-sm text-blue-200/90 max-w-3xl leading-relaxed">
-              Implemented directly from research by Santosh Kumar Maharana, Sankarsan Sahoo, Sudhanshu Sekhar Rautaray,
-              Shreemanta Kumar Tripathy, Meenakshi Kandpal, and Jyotirmayee Rautaray (OUTR & SOA University, Bhubaneswar).
+              Implemented directly from research by Santosh Kumar Maharana,
+              Sankarsan Sahoo, Sudhanshu Sekhar Rautaray, Shreemanta Kumar
+              Tripathy, Meenakshi Kandpal, and Jyotirmayee Rautaray (OUTR & SOA
+              University, Bhubaneswar).
             </p>
           </div>
 
           <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-5 py-4 rounded-2xl border border-white/15 shrink-0">
             <div className="text-center">
-              <span className="text-3xl font-black text-emerald-400 block">96.95%</span>
+              <span className="text-3xl font-black text-emerald-400 block">
+                96.95%
+              </span>
               <span className="text-[10px] text-blue-200 font-bold uppercase tracking-wider">
                 Ensemble Accuracy
               </span>
             </div>
             <div className="w-px h-10 bg-white/20" />
             <div className="text-center">
-              <span className="text-3xl font-black text-amber-300 block">0.99</span>
+              <span className="text-3xl font-black text-amber-300 block">
+                0.99
+              </span>
               <span className="text-[10px] text-blue-200 font-bold uppercase tracking-wider">
                 ROC-AUC Score
               </span>
@@ -149,10 +158,26 @@ export default function EnsembleModelView() {
       {/* Navigation Sub-Tabs */}
       <div className="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3">
         {[
-          { id: "benchmarks", label: "Model Benchmark (Table I)", icon: BarChart3 },
-          { id: "architecture", label: "Stacking Pipeline (Fig. 1)", icon: Layers },
-          { id: "charts", label: "Metrics & ROC Curve (Fig. 2 & 3)", icon: TrendingUp },
-          { id: "simulation", label: "Live Stacking Inference Lab", icon: BrainCircuit }
+          {
+            id: "benchmarks",
+            label: "Model Benchmark (Table I)",
+            icon: BarChart3,
+          },
+          {
+            id: "architecture",
+            label: "Stacking Pipeline (Fig. 1)",
+            icon: Layers,
+          },
+          {
+            id: "charts",
+            label: "Metrics & ROC Curve (Fig. 2 & 3)",
+            icon: TrendingUp,
+          },
+          {
+            id: "simulation",
+            label: "Live Stacking Inference Lab",
+            icon: BrainCircuit,
+          },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -180,16 +205,21 @@ export default function EnsembleModelView() {
             <div className="p-5 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
               <div>
                 <h3 className="font-extrabold text-slate-900 text-base flex items-center gap-2">
-                  <span>Table I: Performance Matrices of Various Classifiers</span>
+                  <span>
+                    Table I: Performance Matrices of Various Classifiers
+                  </span>
                   <span className="text-xs bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded-full">
                     Peer Reviewed Results
                   </span>
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Comparison between baseline individual classifiers and the proposed Tuned Stacking Ensemble
+                  Comparison between baseline individual classifiers and the
+                  proposed Tuned Stacking Ensemble
                 </p>
               </div>
-              <span className="text-xs font-mono text-slate-400">IEEE IC-CGU 2025</span>
+              <span className="text-xs font-mono text-slate-400">
+                IEEE IC-CGU 2025
+              </span>
             </div>
 
             <div className="overflow-x-auto">
@@ -216,7 +246,9 @@ export default function EnsembleModelView() {
                       }`}
                     >
                       <td className="py-4 px-6 font-semibold flex items-center gap-2">
-                        {row.isProposed && <Award className="w-4 h-4 text-blue-600 shrink-0" />}
+                        {row.isProposed && (
+                          <Award className="w-4 h-4 text-blue-600 shrink-0" />
+                        )}
                         <span>{row.model}</span>
                         {row.isProposed && (
                           <span className="text-[10px] bg-blue-600 text-white font-extrabold px-2 py-0.5 rounded-md uppercase">
@@ -228,7 +260,9 @@ export default function EnsembleModelView() {
                         {row.type}
                       </td>
                       <td className="py-4 px-4 text-right font-mono font-bold">
-                        <span className={row.isProposed ? "text-emerald-700" : ""}>
+                        <span
+                          className={row.isProposed ? "text-emerald-700" : ""}
+                        >
                           {row.accuracy.toFixed(2)}%
                         </span>
                       </td>
@@ -238,18 +272,28 @@ export default function EnsembleModelView() {
                         </span>
                       </td>
                       <td className="py-4 px-4 text-right font-mono font-bold">
-                        <span className={row.isProposed ? "text-indigo-700" : ""}>
+                        <span
+                          className={row.isProposed ? "text-indigo-700" : ""}
+                        >
                           {row.recall.toFixed(2)}%
                         </span>
                       </td>
                       <td className="py-4 px-4 text-right font-mono font-bold">
-                        <span className={row.isProposed ? "text-emerald-700" : ""}>
+                        <span
+                          className={row.isProposed ? "text-emerald-700" : ""}
+                        >
                           {row.f1Score.toFixed(2)}%
                         </span>
                       </td>
                       <td className="py-4 px-6 text-right font-mono font-bold">
-                        <span className={row.isProposed ? "text-rose-600 font-black" : ""}>
-                          {row.rocAuc >= 1 ? (row.rocAuc / 100).toFixed(2) : row.rocAuc.toFixed(2)}
+                        <span
+                          className={
+                            row.isProposed ? "text-rose-600 font-black" : ""
+                          }
+                        >
+                          {row.rocAuc >= 1
+                            ? (row.rocAuc / 100).toFixed(2)
+                            : row.rocAuc.toFixed(2)}
                         </span>
                       </td>
                     </tr>
@@ -260,8 +304,14 @@ export default function EnsembleModelView() {
 
             <div className="p-4 bg-slate-50/80 border-t border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
               <p>
-                💡 <strong>Key Finding from Paper:</strong> The Stacking Ensemble with CatBoost meta-classifier achieves the highest overall metrics:
-                <strong className="text-emerald-700 ml-1">96.95% accuracy</strong> and <strong className="text-indigo-700">97.95% recall</strong>, eliminating false alarms while capturing subtle fraud patterns.
+                💡 <strong>Key Finding from Paper:</strong> The Stacking
+                Ensemble with CatBoost meta-classifier achieves the highest
+                overall metrics:
+                <strong className="text-emerald-700 ml-1">
+                  96.95% accuracy
+                </strong>{" "}
+                and <strong className="text-indigo-700">97.95% recall</strong>,
+                eliminating false alarms while capturing subtle fraud patterns.
               </p>
             </div>
           </div>
@@ -277,7 +327,8 @@ export default function EnsembleModelView() {
                 Figure 1: Working Flowchart of Proposed Model using Stacking
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
-                Two-Level Stacking Ensemble learning architecture with K-Fold cross-validation and CatBoost meta-learner
+                Two-Level Stacking Ensemble learning architecture with K-Fold
+                cross-validation and CatBoost meta-learner
               </p>
             </div>
 
@@ -289,14 +340,17 @@ export default function EnsembleModelView() {
                   <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm mb-3">
                     01
                   </div>
-                  <h4 className="font-bold text-slate-900 text-sm">Input Data Stream</h4>
+                  <h4 className="font-bold text-slate-900 text-sm">
+                    Input Data Stream
+                  </h4>
                   <p className="text-xs text-slate-500 mt-1">
-                    Structured UPI transaction records with amounts, timestamps, user & device identifiers.
+                    Structured UPI transaction records with amounts, timestamps,
+                    user & device identifiers.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-600 font-mono">
-                  • 10B+ Monthly Volume Context<br />
-                  • 60% of all digital frauds
+                  • 10B+ Monthly Volume Context
+                  <br />• 60% of all digital frauds
                 </div>
               </div>
 
@@ -306,14 +360,17 @@ export default function EnsembleModelView() {
                   <div className="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-sm mb-3">
                     02
                   </div>
-                  <h4 className="font-bold text-slate-900 text-sm">Preprocessing & SMOTE</h4>
+                  <h4 className="font-bold text-slate-900 text-sm">
+                    Preprocessing & SMOTE
+                  </h4>
                   <p className="text-xs text-slate-500 mt-1">
-                    Data cleaning (median/mode), one-hot encoding, StandardScaler, and SMOTE for extreme class imbalance.
+                    Data cleaning (median/mode), one-hot encoding,
+                    StandardScaler, and SMOTE for extreme class imbalance.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-600 font-mono">
-                  • Hour & Day pattern extraction<br />
-                  • Amount / User Txn count ratio
+                  • Hour & Day pattern extraction
+                  <br />• Amount / User Txn count ratio
                 </div>
               </div>
 
@@ -323,9 +380,12 @@ export default function EnsembleModelView() {
                   <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-sm mb-3 shadow-xs">
                     03
                   </div>
-                  <h4 className="font-bold text-blue-950 text-sm">Level-0 Base Classifiers</h4>
+                  <h4 className="font-bold text-blue-950 text-sm">
+                    Level-0 Base Classifiers
+                  </h4>
                   <p className="text-xs text-blue-800 mt-1">
-                    5 Diverse Models generate Out-of-Fold (OOF) cross-validation predictions.
+                    5 Diverse Models generate Out-of-Fold (OOF) cross-validation
+                    predictions.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-blue-200 text-[11px] text-blue-900 font-medium space-y-0.5">
@@ -343,14 +403,20 @@ export default function EnsembleModelView() {
                   <div className="w-10 h-10 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-sm mb-3 shadow-xs">
                     04
                   </div>
-                  <h4 className="font-bold text-emerald-950 text-sm">Level-1 CatBoost Meta-Learner</h4>
+                  <h4 className="font-bold text-emerald-950 text-sm">
+                    Level-1 CatBoost Meta-Learner
+                  </h4>
                   <p className="text-xs text-emerald-800 mt-1">
-                    CatBoost combines OOF meta-features using logistic loss to produce final calibrated fraud probabilities.
+                    CatBoost combines OOF meta-features using logistic loss to
+                    produce final calibrated fraud probabilities.
                   </p>
                 </div>
                 <div className="mt-4 pt-3 border-t border-emerald-200 text-[11px] text-emerald-900 font-bold">
-                  Final Output:<br />
-                  <span className="text-emerald-700">96.95% Accuracy • AUC 0.99</span>
+                  Final Output:
+                  <br />
+                  <span className="text-emerald-700">
+                    96.95% Accuracy • AUC 0.99
+                  </span>
                 </div>
               </div>
             </div>
@@ -359,12 +425,21 @@ export default function EnsembleModelView() {
             <div className="bg-slate-50 rounded-2xl p-5 border border-slate-200 text-xs text-slate-700 space-y-3">
               <h4 className="font-bold text-slate-900 text-sm flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-blue-600" />
-                <span>Why Stacking Ensemble Outperforms Traditional Approaches (Section IV):</span>
+                <span>
+                  Why Stacking Ensemble Outperforms Traditional Approaches
+                  (Section IV):
+                </span>
               </h4>
               <p className="leading-relaxed">
-                Single models (like Decision Trees at 87.82% or KNN at 91.37%) struggle with high false positives or missed frauds.
-                The two-level stacking architecture utilizes K-Fold Cross-Validation to generate out-of-fold (OOF) probability estimates from diverse base learners (neural network, gradient boosting, bagging, hyper-plane margins, and linear models).
-                CatBoost acts as the meta-learner because of its native handling of categorical features and superior regularization against overfitting, achieving 97.95% recall.
+                Single models (like Decision Trees at 87.82% or KNN at 91.37%)
+                struggle with high false positives or missed frauds. The
+                two-level stacking architecture utilizes K-Fold Cross-Validation
+                to generate out-of-fold (OOF) probability estimates from diverse
+                base learners (neural network, gradient boosting, bagging,
+                hyper-plane margins, and linear models). CatBoost acts as the
+                meta-learner because of its native handling of categorical
+                features and superior regularization against overfitting,
+                achieving 97.95% recall.
               </p>
             </div>
           </div>
@@ -385,7 +460,7 @@ export default function EnsembleModelView() {
                 { id: "precision", label: "Fig 2(b) Precision" },
                 { id: "recall", label: "Fig 2(c) Recall" },
                 { id: "f1Score", label: "Fig 2(d) F1-Score" },
-                { id: "rocAuc", label: "Fig 2(e) ROC-AUC" }
+                { id: "rocAuc", label: "Fig 2(e) ROC-AUC" },
               ].map((m) => (
                 <button
                   key={m.id}
@@ -407,10 +482,12 @@ export default function EnsembleModelView() {
             <div className="lg:col-span-7 bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col justify-between">
               <div>
                 <h3 className="font-bold text-slate-900 text-base">
-                  Comparison of Various Classifiers: {metricLabels[selectedMetric]}
+                  Comparison of Various Classifiers:{" "}
+                  {metricLabels[selectedMetric]}
                 </h3>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Visual comparison demonstrating proposed Stacked Ensemble superiority
+                  Visual comparison demonstrating proposed Stacked Ensemble
+                  superiority
                 </p>
               </div>
 
@@ -429,12 +506,26 @@ export default function EnsembleModelView() {
                     return (
                       <div key={idx} className="space-y-1">
                         <div className="flex justify-between text-xs font-semibold">
-                          <span className={isTop ? "text-blue-900 font-extrabold flex items-center gap-1.5" : "text-slate-700"}>
+                          <span
+                            className={
+                              isTop
+                                ? "text-blue-900 font-extrabold flex items-center gap-1.5"
+                                : "text-slate-700"
+                            }
+                          >
                             {item.model}
-                            {isTop && <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.2 rounded font-black">TOP</span>}
+                            {isTop && (
+                              <span className="text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.2 rounded font-black">
+                                TOP
+                              </span>
+                            )}
                           </span>
-                          <span className={`font-mono ${isTop ? "text-emerald-700 font-extrabold text-sm" : "text-slate-600"}`}>
-                            {selectedMetric === "rocAuc" ? (val / 100).toFixed(2) : `${val.toFixed(2)}%`}
+                          <span
+                            className={`font-mono ${isTop ? "text-emerald-700 font-extrabold text-sm" : "text-slate-600"}`}
+                          >
+                            {selectedMetric === "rocAuc"
+                              ? (val / 100).toFixed(2)
+                              : `${val.toFixed(2)}%`}
                           </span>
                         </div>
                         <div className="w-full bg-slate-100 h-3 rounded-full overflow-hidden">
@@ -442,9 +533,10 @@ export default function EnsembleModelView() {
                             className={`h-full rounded-full transition-all duration-700 ${
                               isTop
                                 ? "bg-gradient-to-r from-blue-600 to-emerald-500"
-                                : item.model === "XGBoost" || item.model === "Random Forest"
-                                ? "bg-indigo-400"
-                                : "bg-slate-300"
+                                : item.model === "XGBoost" ||
+                                    item.model === "Random Forest"
+                                  ? "bg-indigo-400"
+                                  : "bg-slate-300"
                             }`}
                             style={{ width: `${Math.max(val, 15)}%` }}
                           />
@@ -472,13 +564,51 @@ export default function EnsembleModelView() {
                 <div className="relative w-56 h-56 bg-slate-950 rounded-2xl p-4 border border-slate-800 flex items-center justify-center">
                   <svg className="w-full h-full" viewBox="0 0 100 100">
                     {/* Grid lines */}
-                    <line x1="10" y1="10" x2="10" y2="90" stroke="#334155" strokeWidth="1" />
-                    <line x1="10" y1="90" x2="90" y2="90" stroke="#334155" strokeWidth="1" />
-                    <line x1="10" y1="50" x2="90" y2="50" stroke="#1e293b" strokeDasharray="2" strokeWidth="0.8" />
-                    <line x1="50" y1="10" x2="50" y2="90" stroke="#1e293b" strokeDasharray="2" strokeWidth="0.8" />
+                    <line
+                      x1="10"
+                      y1="10"
+                      x2="10"
+                      y2="90"
+                      stroke="#334155"
+                      strokeWidth="1"
+                    />
+                    <line
+                      x1="10"
+                      y1="90"
+                      x2="90"
+                      y2="90"
+                      stroke="#334155"
+                      strokeWidth="1"
+                    />
+                    <line
+                      x1="10"
+                      y1="50"
+                      x2="90"
+                      y2="50"
+                      stroke="#1e293b"
+                      strokeDasharray="2"
+                      strokeWidth="0.8"
+                    />
+                    <line
+                      x1="50"
+                      y1="10"
+                      x2="50"
+                      y2="90"
+                      stroke="#1e293b"
+                      strokeDasharray="2"
+                      strokeWidth="0.8"
+                    />
 
                     {/* Baseline Random Chance diagonal (AUC = 0.5) */}
-                    <line x1="10" y1="90" x2="90" y2="10" stroke="#64748b" strokeDasharray="3" strokeWidth="1" />
+                    <line
+                      x1="10"
+                      y1="90"
+                      x2="90"
+                      y2="10"
+                      stroke="#64748b"
+                      strokeDasharray="3"
+                      strokeWidth="1"
+                    />
 
                     {/* Proposed Stacking Ensemble Curve (Near-perfect top-left bend AUC = 0.99) */}
                     <path
@@ -508,7 +638,8 @@ export default function EnsembleModelView() {
                     <span>ROC Curve (AUC = 0.99)</span>
                   </span>
                   <p className="text-[11px] text-slate-500 mt-1 max-w-xs">
-                    The curve stays in the top-left corner, meaning high True Positive Rate with virtually zero False Positives.
+                    The curve stays in the top-left corner, meaning high True
+                    Positive Rate with virtually zero False Positives.
                   </p>
                 </div>
               </div>
@@ -528,14 +659,18 @@ export default function EnsembleModelView() {
                   <Sliders className="w-4 h-4 text-blue-600" />
                   <span>Interactive Transaction Inputs</span>
                 </h3>
-                <span className="text-[11px] text-slate-400 font-mono">Real-time Feed</span>
+                <span className="text-[11px] text-slate-400 font-mono">
+                  Real-time Feed
+                </span>
               </div>
 
               {/* Amount Slider */}
               <div>
                 <div className="flex justify-between text-xs font-bold mb-1">
                   <span className="text-slate-700">Transaction Amount</span>
-                  <span className="text-blue-600 font-mono">₹{Number(simAmount).toLocaleString("en-IN")}</span>
+                  <span className="text-blue-600 font-mono">
+                    ₹{Number(simAmount).toLocaleString("en-IN")}
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -553,7 +688,10 @@ export default function EnsembleModelView() {
                 <div className="flex justify-between text-xs font-bold mb-1">
                   <span className="text-slate-700">Timestamp Hour of Day</span>
                   <span className="text-slate-900 font-mono">
-                    {simHour}:00 {simHour >= 23 || simHour <= 4 ? "🚨 (Odd Hour Window)" : "☀️ (Normal)"}
+                    {simHour}:00{" "}
+                    {simHour >= 23 || simHour <= 4
+                      ? "🚨 (Odd Hour Window)"
+                      : "☀️ (Normal)"}
                   </span>
                 </div>
                 <input
@@ -568,42 +706,64 @@ export default function EnsembleModelView() {
 
               {/* Recipient VPA */}
               <div>
-                <label className="text-xs font-bold text-slate-700 block mb-1">Recipient VPA</label>
+                <label className="text-xs font-bold text-slate-700 block mb-1">
+                  Recipient VPA
+                </label>
                 <select
                   value={simVpa}
                   onChange={(e) => setSimVpa(e.target.value)}
                   className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-xs font-mono text-slate-800 cursor-pointer"
                 >
-                  <option value="unknown@upi">unknown@upi (Unregistered Endpoint)</option>
-                  <option value="phishing.cashback@fakebank">phishing.cashback@fakebank (Blacklisted Phishing)</option>
-                  <option value="demo.merchant@upi">demo.merchant@upi (High Velocity Merchant)</option>
-                  <option value="amazon@apl">amazon@apl (Verified Merchant)</option>
-                  <option value="myshop@upi">myshop@upi (Normal Local Kirana)</option>
+                  <option value="unknown@upi">
+                    unknown@upi (Unregistered Endpoint)
+                  </option>
+                  <option value="phishing.cashback@fakebank">
+                    phishing.cashback@fakebank (Blacklisted Phishing)
+                  </option>
+                  <option value="demo.merchant@upi">
+                    demo.merchant@upi (High Velocity Merchant)
+                  </option>
+                  <option value="amazon@apl">
+                    amazon@apl (Verified Merchant)
+                  </option>
+                  <option value="myshop@upi">
+                    myshop@upi (Normal Local Kirana)
+                  </option>
                 </select>
               </div>
 
               {/* Hardware & Location */}
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div>
-                  <label className="font-semibold text-slate-600 block mb-1">Device Profile</label>
+                  <label className="font-semibold text-slate-600 block mb-1">
+                    Device Profile
+                  </label>
                   <select
                     value={simDevice}
                     onChange={(e) => setSimDevice(e.target.value)}
                     className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] cursor-pointer"
                   >
-                    <option value="Current Device (Windows PC)">Trusted Device</option>
-                    <option value="New Device (Unrecognized)">New Unrecognized</option>
+                    <option value="Current Device (Windows PC)">
+                      Trusted Device
+                    </option>
+                    <option value="New Device (Unrecognized)">
+                      New Unrecognized
+                    </option>
                   </select>
                 </div>
                 <div>
-                  <label className="font-semibold text-slate-600 block mb-1">Geo Location</label>
+                  <label className="font-semibold text-slate-600 block mb-1">
+                    Geo Location
+                  </label>
                   <select
                     value={simLocation}
                     onChange={(e) => setSimLocation(e.target.value)}
                     className="w-full p-2 bg-slate-50 border border-slate-200 rounded-xl text-[11px] cursor-pointer"
                   >
                     <option value="Home City (Bengaluru)">Home City</option>
-                    <option value="Suspicious Proxy / VPN Node">Suspicious Proxy</option>
+                    <option value="Suspicious Proxy / VPN Node">
+                      Suspicious Proxy
+                    </option>
                   </select>
                 </div>
               </div>
@@ -662,7 +822,8 @@ export default function EnsembleModelView() {
                     Two-Level Ensemble Consensus Telemetry
                   </h3>
                   <p className="text-xs text-slate-400">
-                    Level-0 predictions combined by Level-1 CatBoost meta-classifier
+                    Level-0 predictions combined by Level-1 CatBoost
+                    meta-classifier
                   </p>
                 </div>
 
@@ -671,8 +832,8 @@ export default function EnsembleModelView() {
                     simResult.riskLevel === "HIGH"
                       ? "bg-rose-100 text-rose-700"
                       : simResult.riskLevel === "MEDIUM"
-                      ? "bg-amber-100 text-amber-700"
-                      : "bg-emerald-100 text-emerald-700"
+                        ? "bg-amber-100 text-amber-700"
+                        : "bg-emerald-100 text-emerald-700"
                   }`}
                 >
                   {simResult.status}
@@ -696,8 +857,8 @@ export default function EnsembleModelView() {
                           simResult.riskScore >= 70
                             ? "text-rose-600"
                             : simResult.riskScore >= 40
-                            ? "text-amber-600"
-                            : "text-emerald-600"
+                              ? "text-amber-600"
+                              : "text-emerald-600"
                         }
                       >
                         {simResult.riskScore}%
@@ -707,14 +868,16 @@ export default function EnsembleModelView() {
                 </div>
 
                 <div className="text-right">
-                  <span className="text-xs text-slate-400 block font-medium">Model Classification</span>
+                  <span className="text-xs text-slate-400 block font-medium">
+                    Model Classification
+                  </span>
                   <span
                     className={`font-black text-sm uppercase ${
                       simResult.riskLevel === "HIGH"
                         ? "text-rose-600"
                         : simResult.riskLevel === "MEDIUM"
-                        ? "text-amber-600"
-                        : "text-emerald-600"
+                          ? "text-amber-600"
+                          : "text-emerald-600"
                     }`}
                   >
                     {simResult.riskLevel} RISK
@@ -735,16 +898,20 @@ export default function EnsembleModelView() {
                       className="p-3 bg-white border border-slate-200 rounded-xl flex items-center justify-between"
                     >
                       <div>
-                        <span className="font-bold text-xs text-slate-900 block">{bm.name}</span>
-                        <span className="text-[10px] text-slate-400">{bm.type} • Weight: {bm.weight}</span>
+                        <span className="font-bold text-xs text-slate-900 block">
+                          {bm.name}
+                        </span>
+                        <span className="text-[10px] text-slate-400">
+                          {bm.type} • Weight: {bm.weight}
+                        </span>
                       </div>
                       <span
                         className={`text-sm font-mono font-black ${
                           bm.score >= 70
                             ? "text-rose-600"
                             : bm.score >= 40
-                            ? "text-amber-600"
-                            : "text-emerald-600"
+                              ? "text-amber-600"
+                              : "text-emerald-600"
                         }`}
                       >
                         {bm.score}%
@@ -760,10 +927,31 @@ export default function EnsembleModelView() {
                   Feature Engineering Telemetry (Section 4.2):
                 </span>
                 <div className="grid grid-cols-2 gap-2 text-blue-800 text-[11px] pt-1">
-                  <div>• Time of Day: {simResult.ensembleBreakdown.featureEngineering.hourOfDay}</div>
-                  <div>• Amount Ratio: {simResult.ensembleBreakdown.featureEngineering.amountToFrequencyRatio}</div>
-                  <div>• Device Flag: {simResult.ensembleBreakdown.featureEngineering.deviceContext}</div>
-                  <div>• SMOTE Balance: {simResult.ensembleBreakdown.featureEngineering.smoteBalance}</div>
+                  <div>
+                    • Time of Day:{" "}
+                    {simResult.ensembleBreakdown.featureEngineering.hourOfDay}
+                  </div>
+                  <div>
+                    • Amount Ratio:{" "}
+                    {
+                      simResult.ensembleBreakdown.featureEngineering
+                        .amountToFrequencyRatio
+                    }
+                  </div>
+                  <div>
+                    • Device Flag:{" "}
+                    {
+                      simResult.ensembleBreakdown.featureEngineering
+                        .deviceContext
+                    }
+                  </div>
+                  <div>
+                    • SMOTE Balance:{" "}
+                    {
+                      simResult.ensembleBreakdown.featureEngineering
+                        .smoteBalance
+                    }
+                  </div>
                 </div>
               </div>
             </div>
