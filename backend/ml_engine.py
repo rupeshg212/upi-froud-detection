@@ -34,7 +34,7 @@ class UpiEnsembleModel:
 
     def generate_synthetic_upi_dataset(self, n_samples=3000):
         """
-        Generates realistic UPI transactions mirroring the IEEE 2025 paper distribution.
+        Generates realistic UPI transactions mirroring the real-world dataset distribution.
         97% Legitimate transactions, 3% Fraudulent transactions before SMOTE.
         """
         np.random.seed(42)
@@ -103,7 +103,7 @@ class UpiEnsembleModel:
             "logisticRegression": LogisticRegression(max_iter=300, random_state=42)
         }
 
-        # K-Fold Out-of-Fold (OOF) cross-validation for Meta-Matrix (Section 4.3 of IEEE paper)
+        # K-Fold Out-of-Fold (OOF) cross-validation for Meta-Matrix
         print("5. Generating Out-of-Fold (OOF) meta-features via 5-Fold Cross-Validation...")
         skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
         meta_features = np.zeros((X_scaled.shape[0], len(self.base_models)))

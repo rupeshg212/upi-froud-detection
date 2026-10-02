@@ -1,6 +1,4 @@
 // Smart AI Fraud Detection Engine using Stacking Ensemble Learning
-// Based on: "UPI Fraud Detection using Ensemble Learning" (IEEE 2025 IC-CGU)
-// Authors: Santosh Kumar Maharana et al. (OUTR & SOA)
 // Architecture: Level-0 (MLP, RF, XGBoost, SVM, LR) -> Level-1 Meta-Learner (CatBoost)
 
 import { demoMerchants } from "../data/mockData";
@@ -138,7 +136,7 @@ export const evaluateUpiTransaction = ({
 
   // Level-1 Meta-Learner (CatBoost Classifier):
   // Trained via K-Fold Out-of-Fold (OOF) cross-validation with logistic loss function.
-  // CatBoost optimal weights from IEEE paper:
+  // CatBoost optimal weights:
   // XGBoost (0.28) + RF (0.24) + MLP (0.20) + SVM (0.16) + LR (0.12)
   const catBoostScore = Math.round(
     (xgbProb * 0.28 + rfProb * 0.24 + mlpProb * 0.20 + svmProb * 0.16 + lrProb * 0.12) * 100
@@ -172,7 +170,7 @@ export const evaluateUpiTransaction = ({
     reasons,
     riskFactors,
     merchantDetails: matchedMerchant || null,
-    // Detailed Ensemble Breakdown as per IEEE 2025 Paper
+    // Detailed Ensemble Breakdown
     ensembleBreakdown: {
       metaModel: "CatBoost Classifier (Level-1)",
       metaScore: finalScore,

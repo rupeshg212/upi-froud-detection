@@ -27,7 +27,7 @@ export default function Sidebar({
     { id: "transactions", label: "Transactions", icon: CreditCard },
     { id: "send-money", label: "Send Money", icon: Send },
     { id: "scan-merchant", label: "Scan Merchant", icon: QrCode, badge: "NEW" },
-    { id: "ensemble-model", label: "Ensemble AI Model", icon: BrainCircuit, badge: "IEEE '25" },
+    { id: "ensemble-model", label: "Ensemble AI Model", icon: BrainCircuit, badge: "AI LAB" },
     { id: "alerts", label: "Alerts", icon: Bell, alertCount: unreadAlertCount },
     { id: "analytics", label: "Analytics", icon: BarChart3 },
     { id: "profile", label: "Profile", icon: User },

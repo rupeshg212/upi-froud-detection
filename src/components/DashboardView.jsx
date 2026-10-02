@@ -10,8 +10,7 @@ import {
   ShieldAlert,
   CheckCircle2,
   Clock,
-  ChevronRight,
-  BrainCircuit
+  ChevronRight
 } from "lucide-react";
 
 export default function DashboardView({
@@ -261,34 +260,6 @@ export default function DashboardView({
         </div>
       </div>
 
-      {/* Two-Level Stacking Ensemble Engine Banner */}
-      <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm border border-blue-800/60">
-        <div className="flex items-center space-x-3.5">
-          <div className="w-11 h-11 rounded-xl bg-blue-500/20 border border-blue-400/30 flex items-center justify-center text-blue-300 shrink-0">
-            <BrainCircuit className="w-6 h-6" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h4 className="font-bold text-sm text-white flex items-center gap-1.5">
-                Two-Level Stacking Ensemble Engine Active
-              </h4>
-              <span className="text-[10px] font-extrabold bg-emerald-500 text-white px-2 py-0.5 rounded uppercase tracking-wider">
-                CATBOOST META-LEARNER
-              </span>
-            </div>
-            <p className="text-xs text-blue-200/90 mt-0.5">
-              MLP + Random Forest + XGBoost + SVM + Logistic Regression combined via Meta-Learner
-            </p>
-          </div>
-        </div>
-
-        <button
-          onClick={() => onNavigate("ensemble-model")}
-          className="w-full sm:w-auto bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all cursor-pointer whitespace-nowrap shadow-xs hover:scale-[1.02]"
-        >
-          Explore Stacking Lab →
-        </button>
-      </div>
 
       {/* High Risk Alert Banner matching screenshot */}
       {highRiskAlert && (

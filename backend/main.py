@@ -15,7 +15,7 @@ init_db()
 
 app = FastAPI(
     title="UPI SHIELD - AI Fraud Detection Backend",
-    description="FastAPI Backend with Stacking Ensemble ML Engine (IEEE 2025)",
+    description="FastAPI Backend with Two-Level Stacking Ensemble ML Engine",
     version="2.0.0"
 )
 
@@ -287,7 +287,7 @@ def get_analytics():
 def get_benchmarks():
     return {
         "paper_title": "UPI Fraud Detection using Ensemble Learning",
-        "conference": "IEEE IC-CGU 2025",
+        "conference": "IC-CGU 2025",
         "doi": "10.1109/IC-CGU67042.2025.11338035",
         "metrics": ensemble_engine.metrics
     }

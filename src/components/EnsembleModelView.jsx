@@ -103,7 +103,7 @@ export default function EnsembleModelView() {
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
-      {/* Research Paper Citation Banner */}
+      {/* AI Stacking Ensemble Lab Header */}
       <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 text-white rounded-3xl p-6 sm:p-7 shadow-xl border border-blue-800/50 relative overflow-hidden">
         <div className="absolute top-0 right-0 -mt-6 -mr-6 w-56 h-56 bg-blue-500/10 rounded-full blur-2xl pointer-events-none" />
 
@@ -111,44 +111,38 @@ export default function EnsembleModelView() {
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               <span className="text-[11px] font-black uppercase tracking-wider bg-blue-500 text-white px-2.5 py-1 rounded-md shadow-xs">
-                IEEE 2025 Paper
+                Two-Level Stacking
               </span>
               <span className="text-xs text-blue-200 font-medium">
-                {ensembleResearchBenchmarks.conference}
-              </span>
-              <span className="text-[11px] text-blue-300 font-mono">
-                DOI: {ensembleResearchBenchmarks.doi}
+                CatBoost Meta-Learner + 5 Base Classifiers
               </span>
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-              {ensembleResearchBenchmarks.paperTitle}
+              AI Stacking Ensemble Lab
             </h1>
 
             <p className="text-xs sm:text-sm text-blue-200/90 max-w-3xl leading-relaxed">
-              Implemented directly from research by Santosh Kumar Maharana,
-              Sankarsan Sahoo, Sudhanshu Sekhar Rautaray, Shreemanta Kumar
-              Tripathy, Meenakshi Kandpal, and Jyotirmayee Rautaray (OUTR & SOA
-              University, Bhubaneswar).
+              Real-time multi-model ensemble combining Multi-Layer Perceptron (MLP), Random Forest, XGBoost, Support Vector Machine, and Logistic Regression with CatBoost meta-classification.
             </p>
           </div>
 
           <div className="flex items-center gap-4 bg-white/10 backdrop-blur-md px-5 py-4 rounded-2xl border border-white/15 shrink-0">
             <div className="text-center">
               <span className="text-3xl font-black text-emerald-400 block">
-                96.95%
+                Level-0
               </span>
               <span className="text-[10px] text-blue-200 font-bold uppercase tracking-wider">
-                Ensemble Accuracy
+                5 Base Models
               </span>
             </div>
             <div className="w-px h-10 bg-white/20" />
             <div className="text-center">
               <span className="text-3xl font-black text-amber-300 block">
-                0.99
+                Level-1
               </span>
               <span className="text-[10px] text-blue-200 font-bold uppercase tracking-wider">
-                ROC-AUC Score
+                Meta-Learner
               </span>
             </div>
           </div>
@@ -218,7 +212,7 @@ export default function EnsembleModelView() {
                 </p>
               </div>
               <span className="text-xs font-mono text-slate-400">
-                IEEE IC-CGU 2025
+                Ensemble Benchmark Suite
               </span>
             </div>
 

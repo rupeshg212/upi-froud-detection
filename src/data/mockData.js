@@ -387,10 +387,10 @@ export const userProfile = {
   ]
 };
 
-// Research Paper Dataset Benchmark (From IEEE 2025: Table I & Figs 2a-e, Fig 3)
+// Two-Level Stacking Ensemble Benchmarks (Table I & Figs 2a-e, Fig 3)
 export const ensembleResearchBenchmarks = {
   paperTitle: "UPI Fraud Detection using Ensemble Learning",
-  conference: "2025 IEEE International Conference on Cognitive, Green and Ubiquitous Computing (IC-CGU)",
+  conference: "International Conference on Cognitive, Green and Ubiquitous Computing (IC-CGU)",
   authors: [
     "Santosh Kumar Maharana",
     "Sankarsan Sahoo",

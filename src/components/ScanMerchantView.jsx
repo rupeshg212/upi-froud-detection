@@ -481,12 +481,12 @@ export default function ScanMerchantView({ onBack, onPayMerchant }) {
                 </div>
               </div>
 
-              {/* Stacking Ensemble Model Consensus (IEEE 2025 Paper) */}
+              {/* Stacking Ensemble Model Consensus */}
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
                     <BrainCircuit className="w-4 h-4 text-blue-600" />
-                    <span>Stacking Ensemble Telemetry (IEEE 2025)</span>
+                    <span>Stacking Ensemble Telemetry</span>
                   </h4>
                   <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                     CatBoost Meta-Model
