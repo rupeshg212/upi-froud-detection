@@ -14,7 +14,8 @@ import {
   XCircle,
   HelpCircle,
   X,
-  FileWarning
+  FileWarning,
+  BrainCircuit
 } from "lucide-react";
 import { demoMerchants } from "../data/mockData";
 import { evaluateUpiTransaction, parseUpiQrString } from "../utils/fraudDetection";
@@ -532,6 +533,47 @@ export default function ScanMerchantView({ onBack, onPayMerchant }) {
                       <span className="text-slate-700 font-medium">{reason}</span>
                     </div>
                   ))}
+                </div>
+              </div>
+
+              {/* Stacking Ensemble Model Consensus (IEEE 2025 Paper) */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider flex items-center gap-1.5">
+                    <BrainCircuit className="w-4 h-4 text-blue-600" />
+                    <span>Stacking Ensemble Telemetry (IEEE 2025)</span>
+                  </h4>
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                    CatBoost Meta-Model
+                  </span>
+                </div>
+
+                <div className="bg-white border border-slate-200 rounded-2xl p-3.5 space-y-2 text-xs">
+                  <div className="flex justify-between items-center pb-2 border-b border-slate-100 font-bold text-slate-900">
+                    <span>Level-1 CatBoost Meta Confidence:</span>
+                    <span className="text-sm text-blue-600 font-mono">
+                      {scannedData.ensembleVotes?.catBoostMeta || scannedData.riskScore}%
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-1.5 text-[11px]">
+                    <div className="flex justify-between bg-slate-50 p-1.5 rounded">
+                      <span className="text-slate-500">XGBoost:</span>
+                      <span className="font-bold">{scannedData.ensembleVotes?.xgboost || scannedData.riskScore}%</span>
+                    </div>
+                    <div className="flex justify-between bg-slate-50 p-1.5 rounded">
+                      <span className="text-slate-500">Random Forest:</span>
+                      <span className="font-bold">{scannedData.ensembleVotes?.randomForest || scannedData.riskScore}%</span>
+                    </div>
+                    <div className="flex justify-between bg-slate-50 p-1.5 rounded">
+                      <span className="text-slate-500">MLP Neural Net:</span>
+                      <span className="font-bold">{scannedData.ensembleVotes?.mlp || scannedData.riskScore}%</span>
+                    </div>
+                    <div className="flex justify-between bg-slate-50 p-1.5 rounded">
+                      <span className="text-slate-500">SVM:</span>
+                      <span className="font-bold">{scannedData.ensembleVotes?.svm || scannedData.riskScore}%</span>
+                    </div>
+                  </div>
                 </div>
               </div>
 

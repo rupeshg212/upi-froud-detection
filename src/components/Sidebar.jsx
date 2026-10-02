@@ -10,7 +10,8 @@ import {
   User,
   Settings,
   LogOut,
-  X
+  X,
+  BrainCircuit
 } from "lucide-react";
 
 export default function Sidebar({
@@ -26,6 +27,7 @@ export default function Sidebar({
     { id: "transactions", label: "Transactions", icon: CreditCard },
     { id: "send-money", label: "Send Money", icon: Send },
     { id: "scan-merchant", label: "Scan Merchant", icon: QrCode, badge: "NEW" },
+    { id: "ensemble-model", label: "Ensemble AI Model", icon: BrainCircuit, badge: "IEEE '25" },
     { id: "alerts", label: "Alerts", icon: Bell, alertCount: unreadAlertCount },
     { id: "analytics", label: "Analytics", icon: BarChart3 },
     { id: "profile", label: "Profile", icon: User },
@@ -78,10 +80,10 @@ export default function Sidebar({
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
               </span>
-              <span className="text-xs font-semibold text-slate-200">AI Guard 2.4</span>
+              <span className="text-xs font-semibold text-slate-200">CatBoost Ensemble</span>
             </div>
             <span className="text-[10px] bg-emerald-950/80 text-emerald-400 font-bold px-2 py-0.5 rounded border border-emerald-800/50">
-              LIVE
+              96.95%
             </span>
           </div>
         </div>

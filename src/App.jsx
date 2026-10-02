@@ -10,6 +10,7 @@ import AlertsView from "./components/AlertsView";
 import AnalyticsView from "./components/AnalyticsView";
 import ProfileView from "./components/ProfileView";
 import SettingsView from "./components/SettingsView";
+import EnsembleModelView from "./components/EnsembleModelView";
 import LoginView from "./components/LoginView";
 import { initialTransactions, initialAlerts, userProfile } from "./data/mockData";
 
@@ -209,6 +210,10 @@ export default function App() {
                 handleAddNewTransaction(newTxn);
               }}
             />
+          )}
+
+          {activeTab === "ensemble-model" && (
+            <EnsembleModelView />
           )}
 
           {activeTab === "alerts" && (
